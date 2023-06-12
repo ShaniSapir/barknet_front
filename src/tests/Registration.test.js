@@ -1,5 +1,5 @@
 import {
- render, screen, fireEvent, waitFor
+  render, screen, fireEvent, waitFor, act
 } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
@@ -46,7 +46,6 @@ test("updates input field values", () => {
   fireEvent.change(usernameInput, { target: { value: "johndoe" } });
   fireEvent.change(emailInput, { target: { value: "john.doe@example.com" } });
   fireEvent.change(passwordInput, { target: { value: "Test1234" } });
-
   expect(firstNameInput.value).toBe("John");
   expect(lastNameInput.value).toBe("Doe");
   expect(usernameInput.value).toBe("johndoe");
@@ -68,15 +67,14 @@ test("submits registration form", async () => {
   const emailInput = screen.getByPlaceholderText("Email");
   const passwordInput = screen.getByPlaceholderText("Password");
   const submitButton = screen.getByText("Sign Up");
-
-  fireEvent.change(usernameInput, { target: { value: "testuser" } });
-  fireEvent.change(lastnameInput, { target: { value: "Doe" } });
-  fireEvent.change(firstnameInput, { target: { value: "John" } });
-  fireEvent.change(emailInput, { target: { value: "test@example.com" } });
-  fireEvent.change(passwordInput, { target: { value: "Test1234" } });
-
-  fireEvent.click(submitButton);
-
+  await act(async () => {
+    fireEvent.change(usernameInput, { target: { value: "testuser" } });
+    fireEvent.change(lastnameInput, { target: { value: "Doe" } });
+    fireEvent.change(firstnameInput, { target: { value: "John" } });
+    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
+    fireEvent.change(passwordInput, { target: { value: "Test1234" } });
+    fireEvent.click(submitButton);
+  });
   await waitFor(() => {
     expect(axiosPostMock).toHaveBeenCalledTimes(1);
     expect(axiosPostMock).toHaveBeenCalledWith("http://localhost:8000/", {
@@ -98,10 +96,11 @@ test("displays error message for invalid first name", async () => {
 
   const firstnameInput = screen.getByPlaceholderText("First Name");
   const submitButton = screen.getByText("Sign Up");
+  await act(async () => {
 
-  fireEvent.change(firstnameInput, { target: { value: "123" } });
-  fireEvent.click(submitButton);
-
+    fireEvent.change(firstnameInput, { target: { value: "123" } });
+    fireEvent.click(submitButton);
+  });
   await waitFor(() => {
     const invalidInput = screen.getByPlaceholderText("First Name").classList.contains("input-invalid");
     expect(invalidInput).toBe(true);
@@ -117,10 +116,11 @@ test("displays error message for invalid last name", async () => {
 
   const lastnameInput = screen.getByPlaceholderText("Last Name");
   const submitButton = screen.getByText("Sign Up");
+  await act(async () => {
 
-  fireEvent.change(lastnameInput, { target: { value: "Doe123" } });
-  fireEvent.click(submitButton);
-
+    fireEvent.change(lastnameInput, { target: { value: "Doe123" } });
+    fireEvent.click(submitButton);
+  });
   await waitFor(() => {
     const invalidInput = screen.getByPlaceholderText("Last Name").classList.contains("input-invalid");
     expect(invalidInput).toBe(true);
@@ -136,10 +136,11 @@ test("displays error message for invalid password", async () => {
 
   const passwordInput = screen.getByPlaceholderText("Password");
   const submitButton = screen.getByText("Sign Up");
+  await act(async () => {
 
-  fireEvent.change(passwordInput, { target: { value: "password" } });
-  fireEvent.click(submitButton);
-
+    fireEvent.change(passwordInput, { target: { value: "password" } });
+    fireEvent.click(submitButton);
+  });
   await waitFor(() => {
     const invalidInput = screen.getByPlaceholderText("Password").classList.contains("input-invalid");
     expect(invalidInput).toBe(true);
@@ -155,10 +156,11 @@ test("displays error message for invalid email", async () => {
 
   const emailInput = screen.getByPlaceholderText("Email");
   const submitButton = screen.getByText("Sign Up");
+  await act(async () => {
 
-  fireEvent.change(emailInput, { target: { value: "test@example" } });
-  fireEvent.click(submitButton);
-
+    fireEvent.change(emailInput, { target: { value: "test@example" } });
+    fireEvent.click(submitButton);
+  });
   await waitFor(() => {
     const invalidInput = screen.getByPlaceholderText("Email").classList.contains("input-invalid");
     expect(invalidInput).toBe(true);

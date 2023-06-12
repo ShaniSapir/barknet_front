@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor, act } from "@testing-library/react";
 import axios from "axios";
 import { MemoryRouter } from "react-router-dom";
 import Search from "../pages/Search";
@@ -29,8 +29,10 @@ describe("Search", () => {
     const searchInput = getByPlaceholderText("searchBox");
     const searchButton = getByRole("button", { name: "Search" });
 
-    fireEvent.change(searchInput, { target: { value: "John" } });
-    fireEvent.click(searchButton);
+    await act(async () => {
+      fireEvent.change(searchInput, { target: { value: "John" } });
+      fireEvent.click(searchButton);
+    });
 
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalledWith("http://localhost:8000/search", { query: "John" });
@@ -55,9 +57,10 @@ describe("Search", () => {
 
     const searchInput = getByPlaceholderText("searchBox");
     const searchButton = getByRole("button", { name: "Search" });
-
-    fireEvent.change(searchInput, { target: { value: "John" } });
-    fireEvent.click(searchButton);
+    await act(async () => {
+      fireEvent.change(searchInput, { target: { value: "John" } });
+      fireEvent.click(searchButton);
+    });
 
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalledWith("http://localhost:8000/search", { query: "John" });
