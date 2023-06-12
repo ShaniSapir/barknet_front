@@ -21,6 +21,13 @@
   flex-direction: column;
 }
 
+.deleteButton {
+  margin-top: 10px;
+  width: 150px;
+  left: 28%;
+  position: relative;
+}
+
 .profile {
   background: url(../../public/profile2.png)no-repeat;
   background-position: center;

@@ -4,8 +4,10 @@ import axios from "axios";
 import "./Personal_area.css";
 import Navbar from "../components/Navbar";
 import Post from "../components/Post";
+import RegistrationForm from "./RegistrationForm";
 
 function Personal_area() {
+  const navigate = useNavigate();
   const arrStatPic = ["https://worldanimalfoundation.org/wp-content/uploads/2023/02/4-1024x768.jpg", "https://www.wiscontext.org/sites/default/files/assets/images/apl-demographics-dogs-madison-breeds-2016-piechart.jpg", "https://cdn.vox-cdn.com/thumbor/k7ptfn4JhwVxU8T3dXNJTNfEfjg=/0x0:2617x1990/1200x0/filters:focal(0x0:2617x1990):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/7025029/222FINAL.0.png"];
   const history = useNavigate();
   const visited = localStorage.getItem("visitedUser");
@@ -26,6 +28,7 @@ function Personal_area() {
   }); // Edited user details
   const [isFollowing, setIsFollowing] = useState(false); // Following flag
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showDeleteButton, setShowDeleteButton] = useState(true);
 
   async function handleLoading() {
     try {
@@ -50,6 +53,8 @@ function Personal_area() {
         visited
       });
       setPosts(postsResponse.data);
+      setShowDeleteButton(current === visited); // Show the delete button if the visited
+
     } catch (error) {
       console.log(error);
     }
@@ -219,6 +224,18 @@ function Personal_area() {
     history("/new_post");
   };
 
+  const handleDeleteAccount = async () => {
+    // Implement the logic to delete the account
+    try {
+      await axios.post("http://localhost:8000/deleteAccount", {
+        username: visited
+      });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <Navbar />
@@ -311,6 +328,11 @@ function Personal_area() {
               Save
             </button>
           )}
+          {showDeleteButton && (
+          <button type="button" className="deleteButton" onClick={handleDeleteAccount}>
+            Delete Account
+          </button>
+        )}
         </div>
         <div className="followDiv">
           <button
