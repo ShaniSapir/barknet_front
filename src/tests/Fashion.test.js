@@ -2,14 +2,15 @@ import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
+import { act } from "react-dom/test-utils";
 import Fashion from "../pages/explore_pages/Fashion";
 import Post from "../components/Post";
 
 describe("Fashion Component", () => {
   beforeEach(() => {
     global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-        json: () => Promise.resolve([]),
-      }));
+      json: () => Promise.resolve([]),
+    }));
   });
 
   it("should render the Fashion component with empty posts", async () => {
@@ -41,8 +42,8 @@ describe("Fashion Component", () => {
     ];
 
     global.fetch = jest.fn().mockImplementationOnce(() => Promise.resolve({
-        json: () => Promise.resolve(mockedPosts),
-      }));
+      json: () => Promise.resolve(mockedPosts),
+    }));
 
     const { getByText, getAllByTestId, queryByText } = render(
       <MemoryRouter>
@@ -130,7 +131,9 @@ describe("Fashion Component", () => {
 
       expect(likesCountElement).toBeInTheDocument();
 
-      fireEvent.click(likeButton);
+      act(() => {
+        fireEvent.click(likeButton);
+      });
     });
   });
 });

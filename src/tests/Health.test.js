@@ -1,15 +1,15 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import axios from "axios";
+import { act } from "react-dom/test-utils";
 import Health from "../pages/explore_pages/Health";
 import Post from "../components/Post";
 
 describe("Health Component", () => {
   beforeEach(() => {
     global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-        json: () => Promise.resolve([]),
-      }));
+      json: () => Promise.resolve([]),
+    }));
   });
 
   it("should render the Health component with empty posts", async () => {
@@ -41,8 +41,8 @@ describe("Health Component", () => {
     ];
 
     global.fetch = jest.fn().mockImplementationOnce(() => Promise.resolve({
-        json: () => Promise.resolve(mockedPosts),
-      }));
+      json: () => Promise.resolve(mockedPosts),
+    }));
 
     const { getByText, getAllByTestId, queryByText } = render(
       <MemoryRouter>
@@ -130,7 +130,9 @@ describe("Health Component", () => {
 
       expect(likesCountElement).toBeInTheDocument();
 
-      fireEvent.click(likeButton);
+      act(() => {
+        fireEvent.click(likeButton);
+      });
     });
   });
 });

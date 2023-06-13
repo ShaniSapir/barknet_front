@@ -9,14 +9,13 @@ describe("CreatePost Component", () => {
   test("renders the create post form", () => {
     render(<CreatePost />);
 
+
+
     const newPostLabel = screen.getByText("NEW POST");
     expect(newPostLabel).toBeInTheDocument();
 
     const chooseHashtagLabel = screen.getByLabelText("Choose Hashtag");
     expect(chooseHashtagLabel).toBeInTheDocument();
-
-    /* const hashtagSelect = screen.getByRole("combobox", { name: "Choose Hashtag" });
-    expect(hashtagSelect).toBeInTheDocument(); */
 
     const uploadImageLabel = screen.getByLabelText("Upload Image");
     expect(uploadImageLabel).toBeInTheDocument();
@@ -36,8 +35,7 @@ describe("CreatePost Component", () => {
 
   test("updates input field values", () => {
     render(<CreatePost />);
-
-    const hashtagSelect = screen.getByRole("combobox", { name: "Choose Hashtag" });
+    const hashtagSelect = screen.getByLabelText("Choose Hashtag");
     const captionInput = screen.getByLabelText("Caption");
 
     fireEvent.change(hashtagSelect, { target: { value: "Fashion" } });
