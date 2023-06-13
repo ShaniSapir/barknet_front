@@ -1,18 +1,15 @@
 import React from "react";
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import axios from "axios";
 import Adoption from "../pages/explore_pages/Adoption";
 import Post from "../components/Post";
-import axios from "axios";
-
 
 describe("Adoption Component", () => {
   beforeEach(() => {
-    global.fetch = jest.fn().mockImplementation(() =>
-      Promise.resolve({
+    global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
         json: () => Promise.resolve([]),
-      })
-    );
+      }));
   });
 
   it("should render the Adoption component with empty posts", async () => {
@@ -43,11 +40,9 @@ describe("Adoption Component", () => {
       },
     ];
 
-    global.fetch = jest.fn().mockImplementationOnce(() =>
-      Promise.resolve({
+    global.fetch = jest.fn().mockImplementationOnce(() => Promise.resolve({
         json: () => Promise.resolve(mockedPosts),
-      })
-    );
+      }));
 
     const { getByText, getAllByTestId, queryByText } = render(
       <MemoryRouter>
@@ -76,7 +71,6 @@ describe("Adoption Component", () => {
     expect(getByRole("navigation")).toBeInTheDocument();
   });
 
-
   jest.mock("axios");
 
   describe("Post Component", () => {
@@ -103,7 +97,7 @@ describe("Adoption Component", () => {
 
       expect(getByText("user1")).toBeInTheDocument();
       expect(getByText("Caption 1")).toBeInTheDocument();
-      expect(getByText((content, element) => element.tagName.toLowerCase() === 'p' && content.startsWith('#'))).toBeInTheDocument();
+      expect(getByText((content, element) => element.tagName.toLowerCase() === "p" && content.startsWith("#"))).toBeInTheDocument();
       expect(getByText("10")).toBeInTheDocument();
     });
 
@@ -116,8 +110,7 @@ describe("Adoption Component", () => {
         hashtag: "adoption",
         likesCount: 10,
       };
-      jest.mock('axios');
-
+      jest.mock("axios");
 
       const { getByText, getByRole } = render(
         <MemoryRouter>

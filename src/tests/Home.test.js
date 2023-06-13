@@ -95,7 +95,8 @@ describe("Post Component", () => {
           caption={post.caption}
           hashtag={post.hashtag}
           likesCount={post.likesCount}
-        /></MemoryRouter>
+        />
+      </MemoryRouter>
     );
 
     const likeButton = getByRole("button");

@@ -1,5 +1,7 @@
 import React from "react";
-import { render, fireEvent, waitFor, act } from "@testing-library/react";
+import {
+ render, fireEvent, waitFor, act
+} from "@testing-library/react";
 import axios from "axios";
 import { MemoryRouter } from "react-router-dom";
 import Search from "../pages/Search";
