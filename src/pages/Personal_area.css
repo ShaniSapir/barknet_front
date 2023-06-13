@@ -15,10 +15,11 @@
 
 .leftsideDiv {
   display: flex;
-  /* align-items: flex-start; */
+  position: absolute;
   width: 26%;
   height: 159%;
   flex-direction: column;
+  z-index: 999;
 }
 
 .deleteButton {

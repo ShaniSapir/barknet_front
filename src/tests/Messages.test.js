@@ -1,8 +1,8 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import Messages from "../pages/Messages";
 import { act } from "react-dom/test-utils";
+import Messages from "../pages/Messages";
 
 describe("Messages Component", () => {
   it("should render the Messages component", () => {

@@ -9,8 +9,6 @@ describe("CreatePost Component", () => {
   test("renders the create post form", () => {
     render(<CreatePost />);
 
-
-
     const newPostLabel = screen.getByText("NEW POST");
     expect(newPostLabel).toBeInTheDocument();
 

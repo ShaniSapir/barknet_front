@@ -54,6 +54,8 @@ module.exports = {
     "arrow-parens": "off",
     "padded-blocks": "off",
     "no-unused-vars": "off",
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "react/no-array-index-key": "off",
+    "jsx-a11y/anchor-is-valid": "off"
   },
 };
