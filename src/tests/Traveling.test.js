@@ -1,15 +1,15 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import axios from "axios";
+import { act } from "react-dom/test-utils";
 import Traveling from "../pages/explore_pages/Traveling";
 import Post from "../components/Post";
 
 describe("Traveling Component", () => {
   beforeEach(() => {
     global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-        json: () => Promise.resolve([]),
-      }));
+      json: () => Promise.resolve([]),
+    }));
   });
 
   it("should render the Traveling component with empty posts", async () => {
@@ -41,8 +41,8 @@ describe("Traveling Component", () => {
     ];
 
     global.fetch = jest.fn().mockImplementationOnce(() => Promise.resolve({
-        json: () => Promise.resolve(mockedPosts),
-      }));
+      json: () => Promise.resolve(mockedPosts),
+    }));
 
     const { getByText, getAllByTestId, queryByText } = render(
       <MemoryRouter>
@@ -130,7 +130,9 @@ describe("Traveling Component", () => {
 
       expect(likesCountElement).toBeInTheDocument();
 
-      fireEvent.click(likeButton);
+      act(() => {
+        fireEvent.click(likeButton);
+      });
     });
   });
 });

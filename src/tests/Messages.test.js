@@ -2,6 +2,7 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Messages from "../pages/Messages";
+import { act } from "react-dom/test-utils";
 
 describe("Messages Component", () => {
   it("should render the Messages component", () => {
@@ -24,8 +25,9 @@ describe("Messages Component", () => {
     );
 
     const whatsappButton = getByRole("button", { name: "Go to WhatsApp Web" });
-    fireEvent.click(whatsappButton);
-
+    act(() => {
+      fireEvent.click(whatsappButton);
+    });
     expect(window.open).toHaveBeenCalledWith("https://web.whatsapp.com/", "_blank");
   });
 
